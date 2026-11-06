@@ -1,0 +1,1774 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="CI-tested open course on the command line, version control and workflow management for the life sciences">
+      
+      
+      
+        <link rel="canonical" href="https://cls-open.github.io/linux-git-for-bioinformatics/modules/01-unix-mindset/">
+      
+      
+        <link rel="prev" href="../../learning_path/">
+      
+      
+        <link rel="next" href="../../tutorials/01-your-first-pipeline/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>1 · The Unix mindset - Linux, Git and Reproducible Workflows for Bioinformatics — CLS-Open #8</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#module-1-the-unix-mindset-files-pipes-and-biological-text" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Linux, Git and Reproducible Workflows for Bioinformatics — CLS-Open #8" class="md-header__button md-logo" aria-label="Linux, Git and Reproducible Workflows for Bioinformatics — CLS-Open #8" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Linux, Git and Reproducible Workflows for Bioinformatics — CLS-Open #8
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1 · The Unix mindset
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cls-open/linux-git-for-bioinformatics" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cls-open/linux-git-for-bioinformatics
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Linux, Git and Reproducible Workflows for Bioinformatics — CLS-Open #8" class="md-nav__button md-logo" aria-label="Linux, Git and Reproducible Workflows for Bioinformatics — CLS-Open #8" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Linux, Git and Reproducible Workflows for Bioinformatics — CLS-Open #8
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cls-open/linux-git-for-bioinformatics" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cls-open/linux-git-for-bioinformatics
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Start
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Start
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../prerequisites/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prerequisites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_path/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning path
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modules
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modules
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 · The Unix mindset
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 · The Unix mindset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-scientific-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Scientific background
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Learning objectives
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-required-software" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Required software
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-conceptual-explanation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Conceptual explanation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Conceptual explanation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-files-streams-pipes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Files, streams, pipes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-why-line-structure-is-a-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Why line structure is a contract
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-composition-and-quality-defined-rather-than-assumed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Composition and quality, defined rather than assumed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-from-commands-to-a-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 From commands to a pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-mathematical-and-computational-foundations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Mathematical and computational foundations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-practical-demonstration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Practical demonstration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-expected-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Expected output
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-interpretation-of-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Interpretation of results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-common-errors-and-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Common errors and troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-further-reading-and-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Further reading and references
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/01-your-first-pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Your first pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Practicals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Practicals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practicals/practical-01-counting-and-composition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Counting and composition
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practicals/practical-02-pipes-and-streams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Pipes and streams
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assessment
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Assessment
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessments/quiz-01-module1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz (Module 1)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessments/assignment-01-shell-audit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assignment 01
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessments/challenge-01-streaming-qc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Challenge 01
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../instructor/teaching-plans/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instructor pack
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../validation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../limitations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Limitations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-scientific-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Scientific background
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Learning objectives
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-required-software" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Required software
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-conceptual-explanation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Conceptual explanation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Conceptual explanation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-files-streams-pipes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Files, streams, pipes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-why-line-structure-is-a-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Why line structure is a contract
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-composition-and-quality-defined-rather-than-assumed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Composition and quality, defined rather than assumed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-from-commands-to-a-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 From commands to a pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-mathematical-and-computational-foundations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Mathematical and computational foundations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-practical-demonstration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Practical demonstration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-expected-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Expected output
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-interpretation-of-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Interpretation of results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-common-errors-and-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Common errors and troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-further-reading-and-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Further reading and references
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="module-1-the-unix-mindset-files-pipes-and-biological-text">Module 1 — The Unix mindset: files, pipes and biological text<a class="headerlink" href="#module-1-the-unix-mindset-files-pipes-and-biological-text" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Level:</strong> beginner · <strong>Time:</strong> 3–4 hours · <strong>Dataset:</strong> <code>datasets/sample/reads.fastq</code> (200 simulated reads), <code>datasets/sample/proteins.fasta</code>, <code>datasets/sample/contigs.fasta</code>
+<strong>Executable companion:</strong> <a href="../../notebooks/01_unix_mindset.ipynb"><code>notebooks/01_unix_mindset.ipynb</code></a> — every number below is reproduced there by CI.</p>
+</blockquote>
+<h2 id="1-scientific-background">1. Scientific background<a class="headerlink" href="#1-scientific-background" title="Permanent link">&para;</a></h2>
+<p>Almost every file you will touch as a computational biologist is a <strong>line-oriented text file</strong>: FASTA, FASTQ, GFF3, VCF, SAM, BED, Newick, PDB. The format families differ, but they share a design decision made in the 1970s: <em>one record per line, or a fixed number of lines per record, delimited by characters rather than length fields</em>. That decision is why a 40 GB FASTQ can be inspected with <code>head</code> and filtered with <code>grep</code> in constant memory, and why the Unix toolkit remains, fifty years later, the most reliable interface to biological data.</p>
+<p>This matters scientifically rather than aesthetically. The reproducibility literature names <strong>compute-environment and process control</strong> as a pillar of reproducible research (Pillar 3 and Pillar 5 in Naylor et al.'s "five pillars", <em>Briefings in Bioinformatics</em> 2023, doi:10.1093/bib/bbad375). A result produced by commands typed into a terminal and never recorded is not reproducible — even when the numbers are right. So the goal of this module is not "learn 30 commands". It is: <strong>be able to state, in a file you can re-run, exactly how a number was produced.</strong></p>
+<h2 id="2-learning-objectives">2. Learning objectives<a class="headerlink" href="#2-learning-objectives" title="Permanent link">&para;</a></h2>
+<p>By the end of this module you can:</p>
+<ol>
+<li>Explain the difference between a file, a stream and a pipe, and predict when a command will stream rather than load data into memory.</li>
+<li>Compose <code>head</code>, <code>wc</code>, <code>grep</code>, <code>sort</code>, <code>uniq</code>, <code>cut</code> and <code>awk</code> into a one-line quality check, and say what each component does.</li>
+<li><strong>Identify and demonstrate a specific class of counting error</strong> (heuristic line arithmetic vs parsing) and justify which you used.</li>
+<li>Write a command whose output you can validate against a second, independent implementation.</li>
+<li>Explain why a pipeline should be a <em>file describing required outputs</em> rather than a shell history, and read a <code>bioflow plan</code> DAG.</li>
+</ol>
+<h2 id="3-required-software">3. Required software<a class="headerlink" href="#3-required-software" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># from the repository root</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate<span class="w">    </span><span class="c1"># Windows: .venv\Scripts\activate</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">".[dev]"</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>bioflow<span class="w"> </span>--version<span class="w">        </span><span class="c1"># expect: bioflow 0.1.0</span>
+</code></pre></div>
+<p>POSIX tools (<code>head</code>, <code>wc</code>, <code>grep</code>, <code>awk</code>, <code>sort</code>) are present on Linux and macOS. On Windows use WSL2 — not Git Bash, and not "install GNU tools and hope". Module 1 assumes a POSIX shell; pretending otherwise causes exactly the silent failures described in §9.</p>
+<h2 id="4-conceptual-explanation">4. Conceptual explanation<a class="headerlink" href="#4-conceptual-explanation" title="Permanent link">&para;</a></h2>
+<h3 id="41-files-streams-pipes">4.1 Files, streams, pipes<a class="headerlink" href="#41-files-streams-pipes" title="Permanent link">&para;</a></h3>
+<p>A program started from a shell receives three open channels: <strong>stdin</strong> (fd 0), <strong>stdout</strong> (fd 1), <strong>stderr</strong> (fd 2). A pipe <code>|</code> connects one program's stdout to the next program's stdin.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>head -400 reads.fastq | wc -l        # 400 lines pass through, nothing is written to disk
+</code></pre></div>
+<p>The scientific consequence is <em>scale independence of your attention</em>: you can profile a dataset you cannot fit in RAM, and you can stop a computation early (<code>head</code>) without paying for it.</p>
+<p>Two operators you must distinguish:</p>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Meaning</th>
+<th>Failure mode if confused</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&gt;</code></td>
+<td>redirect stdout to a file, <strong>truncating</strong> it first</td>
+<td><code>grep x big.txt &gt; big.txt</code> destroys <code>big.txt</code> before <code>grep</code> reads it</td>
+</tr>
+<tr>
+<td><code>&gt;&gt;</code></td>
+<td>append</td>
+<td>repeated runs silently duplicate results</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-why-line-structure-is-a-contract">4.2 Why line structure is a contract<a class="headerlink" href="#42-why-line-structure-is-a-contract" title="Permanent link">&para;</a></h3>
+<p>FASTQ is exactly four lines per record:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>@header            &lt;- '@' + identifier + optional description
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>SEQUENCE           &lt;- A/C/G/T/N, no spaces
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>+                  &lt;- separator, optionally repeating the header
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>QUALITY            &lt;- one ASCII character per base
+</code></pre></div>
+<p>Because it is four lines, <code>wc -l / 4</code> gives the record count. Because the quality alphabet (Phred+33, ASCII 33–126) can <em>contain</em> <code>@</code>, counting lines beginning with <code>@</code> <strong>over-counts</strong>. This is not a theoretical worry: in our own 200-read simulated dataset, <code>grep -c '^@'</code> returns <strong>204</strong> — four quality lines begin with <code>@</code>. The notebook demonstrates it.</p>
+<p>The general principle is worth stating explicitly, because it recurs in every module:</p>
+<blockquote>
+<p>A <strong>heuristic</strong> (line arithmetic, filename conventions, "it usually looks like this") is fast and usually right. A <strong>parser</strong> (a stated grammar, validated case by case) is slower and sometimes right in ways the heuristic is not. Never mix the two without saying which you used.</p>
+</blockquote>
+<h3 id="43-composition-and-quality-defined-rather-than-assumed">4.3 Composition and quality, defined rather than assumed<a class="headerlink" href="#43-composition-and-quality-defined-rather-than-assumed" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>GC content</strong> here is <code>(G + C) / (A + T + G + C)</code>. Ambiguous symbols (<code>N</code>, <code>R</code>, <code>Y</code>, …) are excluded from <em>both</em> numerator and denominator. Including them silently deflates GC content in draft assemblies — a classic source of irreproducible QC numbers.</li>
+<li><strong>Phred score</strong> <code>Q</code> maps to per-base error probability <code>P = 10^(−Q/10)</code>: Q20 = 1%, Q30 = 0.1%. A "Q30 filter" is therefore a statement about <em>expected errors</em>, not a magic number.</li>
+</ul>
+<h3 id="44-from-commands-to-a-pipeline">4.4 From commands to a pipeline<a class="headerlink" href="#44-from-commands-to-a-pipeline" title="Permanent link">&para;</a></h3>
+<p>A shell history answers "what did I type?". A pipeline answers "what must exist, and what produces it?". <code>bioflow</code> reads YAML where each step declares <code>inputs</code> and <code>outputs</code>; the execution order is <em>derived</em> from those paths, and up-to-date steps are skipped using SHA-256 of inputs plus the command string.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">qc_reads</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bioflow stats {inputs} --json &gt; {outputs}</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="nt">inputs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">datasets/sample/reads.fastq</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="nt">outputs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">results/qc/reads.json</span><span class="p p-Indicator">]</span>
+</code></pre></div>
+<h2 id="5-mathematical-and-computational-foundations">5. Mathematical and computational foundations<a class="headerlink" href="#5-mathematical-and-computational-foundations" title="Permanent link">&para;</a></h2>
+<p>Record count from line count, for a well-formed single-line FASTQ:</p>
+<div class="arithmatex">\[
+n_\text{records} = \frac{L}{4}, \qquad L = \text{number of newline-terminated lines}
+\]</div>
+<p>Mean per-position quality over <code>n</code> reads at position <code>i</code>:</p>
+<div class="arithmatex">\[
+\bar{Q}_i = \frac{1}{n_i}\sum_{k=1}^{n_i} Q_{k,i}, \qquad n_i = \#\{\text{reads with length} &gt; i\}
+\]</div>
+<p>Expected number of erroneous bases in a read of length <code>m</code>:</p>
+<div class="arithmatex">\[
+E[\text{errors}] = \sum_{j=1}^{m} 10^{-Q_j/10}
+\]</div>
+<p>That last formula is why two reads with the same <em>mean</em> Q can have different error counts — mean quality is not a sufficient statistic. We return to this in Module 7 and in the capstone.</p>
+<p><strong>Cost model of a pipe:</strong> each stage adds one process and one copy through a 64 KiB kernel buffer. <code>xargs -P</code> or a workflow manager buys parallelism; a longer pipe does not.</p>
+<h2 id="6-practical-demonstration">6. Practical demonstration<a class="headerlink" href="#6-practical-demonstration" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">cd</span><span class="w"> </span>/path/to/linux-git-for-bioinformatics
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># 1. What is in the file?</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>head<span class="w"> </span>-4<span class="w"> </span>datasets/sample/reads.fastq
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1"># 2. How many records? (two ways — they will disagree, deliberately)</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>wc<span class="w"> </span>-l<span class="w"> </span>&lt;<span class="w"> </span>datasets/sample/reads.fastq<span class="w">        </span><span class="c1"># 800 -&gt; 200 records</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>grep<span class="w"> </span>-c<span class="w"> </span><span class="s1">'^@'</span><span class="w"> </span>datasets/sample/reads.fastq<span class="w">   </span><span class="c1"># 204  &lt;- over-counts: quality lines can start with '@'</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="c1"># 3. Composition, computed by an independent implementation</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>awk<span class="w"> </span><span class="s1">'NR%4==2 {n+=length($0); g+=gsub(/[Gg]/,""); c+=gsub(/[Cc]/,"")} END {printf "%.4f\n", (g+c)/n}'</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span>datasets/sample/reads.fastq<span class="w">            </span><span class="c1"># 0.6040</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="c1"># 4. The library, for comparison</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>bioflow<span class="w"> </span>stats<span class="w"> </span>datasets/sample/reads.fastq
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="c1"># 5. A pipeline you can re-run</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>bioflow<span class="w"> </span>plan<span class="w"> </span>examples/pipeline.yml
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>bioflow<span class="w"> </span>run<span class="w">  </span>examples/pipeline.yml<span class="w">         </span><span class="c1"># 4 executed</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>bioflow<span class="w"> </span>run<span class="w">  </span>examples/pipeline.yml<span class="w">         </span><span class="c1"># 0 executed, 4 skipped</span>
+</code></pre></div>
+<h2 id="7-expected-output">7. Expected output<a class="headerlink" href="#7-expected-output" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$ bioflow stats datasets/sample/reads.fastq
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>file            : datasets/sample/reads.fastq
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>records         : 200
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>total bases     : 12000
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>GC              : 60.4%  (ambiguous bases excluded)
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>length min/mean/max : 60 / 60.0 / 60
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>N50             : 60
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>mean Phred      : 30.46
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>$ bioflow run examples/pipeline.yml
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>run : qc_reads
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>run : qc_contigs
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>run : contig_lengths
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>run : combine
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>ok: 4 executed, 0 skipped
+</code></pre></div>
+<p>and <code>results/contig_lengths.txt</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>&gt;contig_1 synthetic=True
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>47
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>&gt;contig_2 synthetic=True
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>56
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>&gt;contig_3 synthetic=True
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>120
+</code></pre></div>
+<h2 id="8-interpretation-of-results">8. Interpretation of results<a class="headerlink" href="#8-interpretation-of-results" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>GC = 60.4%</strong> matches the simulation parameters (a GC-rich synthetic "genome"), which is the <em>only</em> thing it can legitimately be checked against. On real data you would compare against the reference genome's GC and against a negative control — a 60% GC in a species whose genome is 41% GC is a contamination signal, not a curiosity.</li>
+<li><strong>Mean Phred 30.46</strong> means roughly three expected errors per 60 bp read by <code>E[errors] = Σ 10^(−Q/10)</code> — not "30.46 correct bases per 100".</li>
+<li><strong>The two record counts differ (200 vs 204)</strong> and <em>that difference is the lesson</em>: the heuristic over-counts by exactly the number of quality lines beginning with <code>@</code>. If you cannot explain a discrepancy, you have not finished the analysis.</li>
+<li><strong><code>0 executed, 4 skipped</code> on the second run</strong> is a reproducibility signal: the pipeline knows its outputs are current because it fingerprints its inputs. If it re-ran everything, either an input changed or your tool is not checking the right thing.</li>
+</ul>
+<h2 id="9-common-errors-and-troubleshooting">9. Common errors and troubleshooting<a class="headerlink" href="#9-common-errors-and-troubleshooting" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>grep -c '^@'</code> ≠ <code>wc -l / 4</code></td>
+<td>Quality lines starting with <code>@</code> (or wrapped FASTQ)</td>
+<td>Use a parser; treat the discrepancy as information</td>
+</tr>
+<tr>
+<td>GC &gt; 100%</td>
+<td><code>gsub()</code> mutates <code>$0</code>, so <code>length($0)</code> afterwards excludes G/C</td>
+<td>Compute lengths <em>before</em> substitutions — this exact bug was found while building this lesson</td>
+</tr>
+<tr>
+<td><code>bioflow: command not found</code></td>
+<td>Package not installed in the active environment</td>
+<td><code>pip install -e .</code> inside the venv; check <code>which python</code></td>
+</tr>
+<tr>
+<td>Pipeline re-runs everything each time</td>
+<td>Inputs are regenerated with a new timestamp/hash upstream</td>
+<td>Fingerprint content, not mtime; check <code>.bioflow/stamps/</code></td>
+</tr>
+<tr>
+<td><code>bioflow run</code> fails with "unsatisfiable inputs"</td>
+<td>A step names an input nothing produces and which does not exist</td>
+<td>Fix the path, or add the producing step; run <code>bioflow plan</code> first</td>
+</tr>
+<tr>
+<td><code>awk: syntax error</code> inside a pipeline</td>
+<td>Shell quoting: the command is passed to <code>sh</code>, so single-quote the awk program</td>
+<td>Use <code>'{...}'</code>; see <code>docs/limitations.md</code> on brace handling</td>
+</tr>
+<tr>
+<td>Windows: tools missing</td>
+<td>No POSIX shell</td>
+<td>Use WSL2 (recommended) or a container</td>
+</tr>
+</tbody>
+</table>
+<h2 id="10-exercises">10. Exercises<a class="headerlink" href="#10-exercises" title="Permanent link">&para;</a></h2>
+<p>See <a href="../../practicals/practical-01-counting-and-composition/"><code>docs/practicals/practical-01-counting-and-composition.md</code></a> and <a href="../../practicals/practical-02-pipes-and-streams/"><code>practical-02-pipes-and-streams.md</code></a> for the guided versions; independent work is in <a href="../assessments/"><code>docs/assessments/</code></a>.</p>
+<p>Quick self-check (answers in the notebook, not here):
+1. Why is <code>sort | uniq -c</code> preferred to a Python <code>Counter</code> for a 40 GB file?
+2. What does <code>wc -l</code> count if the last line has no trailing newline?
+3. Which of the two record counts would you report to a collaborator, and how would you justify it?</p>
+<h2 id="11-further-reading-and-references">11. Further reading and references<a class="headerlink" href="#11-further-reading-and-references" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Cock, P.J.A. et al. (2010) "The Sanger FASTQ file format for sequences with quality scores, and the Solexa/Illumina FASTQ variants." <em>Nucleic Acids Research</em> 38(6):1767–1771. doi:10.1093/nar/gkp1137 — the normative FASTQ description used above.</li>
+<li>Naylor, B. et al. (2023) "The five pillars of computational reproducibility: bioinformatics and beyond." <em>Briefings in Bioinformatics</em> 24(6):bbad375. doi:10.1093/bib/bbad375 — the reproducibility framework this repository enforces.</li>
+<li>GNU Coreutils manual — <code>head</code>, <code>wc</code>, <code>sort</code>, <code>uniq</code>, <code>cut</code> semantics and edge cases.</li>
+<li>POSIX <code>awk</code> specification (The Open Group Base Specifications) — <code>gsub</code>, <code>NR</code>, field splitting.</li>
+<li>Software Carpentry <em>The Unix Shell</em> lesson — an excellent, longer treatment of the same fundamentals; this module assumes its existence and does not duplicate it.</li>
+<li>Waskom, M. (2021) "seaborn: statistical data visualization." <em>JOSS</em> 6(60):3021. doi:10.21105/joss.03021 — for Module 3's figures (listed here because the quality plot is your first QC figure).</li>
+</ul>
+<p><em>All references verified against Crossref on 2026-11-06; see <code>docs/references.md</code> for the verification log.</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Content CC BY 4.0 · Code MIT · CLS-Open initiative
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

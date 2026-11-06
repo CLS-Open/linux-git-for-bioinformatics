@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# Notebooks (executed in CI; do not commit checkpoint dirs)
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# Workflow artefacts (regenerated; never committed)
+results/
+.bioflow/
+bioflow_run.log
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Secrets — never commit credentials
+.env
+.env.*
+*.pem
+*.key
+credentials.json

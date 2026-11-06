@@ -1,0 +1,26 @@
+# Example pipeline for Module 1 / Tutorial 2.
+# Run it with:  bioflow plan examples/pipeline.yml   then   bioflow run examples/pipeline.yml
+#
+# Every step declares its inputs and outputs. bioflow derives the dependency
+# graph from those paths, so step order in this file does not matter -- but we
+# keep it readable anyway.
+steps:
+  - name: qc_reads
+    command: bioflow stats {inputs} --json > {outputs}
+    inputs: [datasets/sample/reads.fastq]
+    outputs: [results/qc/reads.json]
+
+  - name: qc_contigs
+    command: bioflow stats {inputs} --json > {outputs}
+    inputs: [datasets/sample/contigs.fasta]
+    outputs: [results/qc/contigs.json]
+
+  - name: contig_lengths
+    command: awk '/^>/{if (n) print n; print; n=0; next} {n+=length($0)} END{if (n) print n}' {inputs} > {outputs}
+    inputs: [datasets/sample/contigs.fasta]
+    outputs: [results/contig_lengths.txt]
+
+  - name: combine
+    command: cat {inputs} > {outputs}
+    inputs: [results/contig_lengths.txt, results/qc/contigs.json]
+    outputs: [results/combined_report.txt]

@@ -1,0 +1,71 @@
+site_name: "Linux, Git and Reproducible Workflows for Bioinformatics — CLS-Open #8"
+site_description: "CI-tested open course on the command line, version control and workflow management for the life sciences"
+site_url: https://cls-open.github.io/linux-git-for-bioinformatics/
+repo_url: https://github.com/cls-open/linux-git-for-bioinformatics
+repo_name: cls-open/linux-git-for-bioinformatics
+edit_uri: edit/main/docs/
+copyright: "Content CC BY 4.0 · Code MIT · CLS-Open initiative"
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: teal
+      accent: deep orange
+      toggle: { icon: material/weather-night, name: Switch to dark mode }
+    - scheme: slate
+      primary: teal
+      accent: deep orange
+      toggle: { icon: material/weather-sunny, name: Switch to light mode }
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.suggest
+
+nav:
+  - Home: index.md
+  - Start:
+      - Installation: installation.md
+      - Prerequisites: prerequisites.md
+      - Learning path: learning_path.md
+  - Modules:
+      - "1 · The Unix mindset": modules/01-unix-mindset.md
+  - Tutorials:
+      - "01 · Your first pipeline": tutorials/01-your-first-pipeline.md
+  - Practicals:
+      - "01 · Counting and composition": practicals/practical-01-counting-and-composition.md
+      - "02 · Pipes and streams": practicals/practical-02-pipes-and-streams.md
+  - Assessment:
+      - "Quiz (Module 1)": assessments/quiz-01-module1.md
+      - "Assignment 01": assessments/assignment-01-shell-audit.md
+      - "Challenge 01": assessments/challenge-01-streaming-qc.md
+  - Instructor pack: instructor/teaching-plans.md
+  - Reference:
+      - Validation: validation.md
+      - Limitations: limitations.md
+      - Roadmap: roadmap.md
+      - References: references.md
+
+markdown_extensions:
+  - admonition
+  - tables
+  - footnotes
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+
+extra_javascript:
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+plugins:
+  - search

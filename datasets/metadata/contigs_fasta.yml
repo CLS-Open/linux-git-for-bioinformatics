@@ -1,0 +1,15 @@
+name: contigs.fasta
+path: datasets/sample/contigs.fasta
+sha256: e7dd6fd80190b4d8a8a19ed125b0a0d0ee9a6e6b45760ed12accaf2c876323e1
+format: FASTA
+records: 3
+lengths: [47, 56, 120]
+synthetic: true
+generator: scripts/make_sample_data.py
+seed: null
+licence: CC-BY-4.0
+contains_personal_data: false
+contains_human_data: false
+source: "hand-written deterministic sequences used by examples/pipeline.yml"
+intended_use: "pipeline tutorials, awk length one-liners, caching demonstrations"
+not_intended_for: "assembly statistics, genome size estimation, biological interpretation"

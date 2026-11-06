@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this educational resource or its software, please cite the specific release you used."
+title: "Linux, Git and Reproducible Workflows for Bioinformatics"
+abstract: >-
+  A beginner-level, CI-tested open course on the POSIX command line, version
+  control and workflow management for the life sciences, taught with biological
+  data. Includes the bioflow pipeline runner and sequence-QC toolkit, five-level
+  assessments, and an instructor pack.
+authors:
+  - family-names: Tolulope
+    given-names: Ademola Emmanuel
+    affiliation: "CLS-Open initiative"
+version: 0.1.0
+date-released: 2026-11-06
+license: MIT
+license-url: "https://github.com/cls-open/linux-git-for-bioinformatics/blob/main/LICENSE"
+repository-code: "https://github.com/cls-open/linux-git-for-bioinformatics"
+url: "https://cls-open.github.io/linux-git-for-bioinformatics/"
+keywords:
+  - bioinformatics
+  - reproducibility
+  - open education
+  - workflow management
+  - command line
+  - FASTQ
+type: software
+notes: >-
+  Content (prose, figures, assessments) is licensed CC BY 4.0; code is MIT.
+  See LICENSES/README.md. No DOI is registered yet; a Zenodo DOI will be added
+  at the first public release.

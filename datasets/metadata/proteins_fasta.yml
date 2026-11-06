@@ -1,0 +1,15 @@
+name: proteins.fasta
+path: datasets/sample/proteins.fasta
+sha256: c3e2c7e4d52b104f507e3ad19d8f6a9174c9e355cf84070739424b08b19d7f31
+format: FASTA
+records: 12
+length_range: "40-120 aa"
+synthetic: true
+generator: scripts/make_sample_data.py
+seed: 20261107
+licence: CC-BY-4.0
+contains_personal_data: false
+contains_human_data: false
+source: "simulated: uniform random draws from the 20 standard amino acids"
+intended_use: "FASTA parsing, length statistics, alignment demonstrations in later modules"
+not_intended_for: "homology claims, structural inference, any biological interpretation"

@@ -1,0 +1,15 @@
+name: reads.fastq
+path: datasets/sample/reads.fastq
+sha256: 3fcba81cf0b323c4d982afb0d781a16378da6a816ced98666ce48f4414514bdd
+format: FASTQ
+records: 200
+read_length: 60
+synthetic: true
+generator: scripts/make_sample_data.py
+seed: 20261106
+licence: CC-BY-4.0
+contains_personal_data: false
+contains_human_data: false
+source: "simulated: GC-rich pseudo-genome, per-position quality decay with Gaussian noise"
+intended_use: "Module 1 statistics, quality-profile figures, pipeline examples"
+not_intended_for: "any biological inference, benchmark of real instrument performance, method validation on real data"

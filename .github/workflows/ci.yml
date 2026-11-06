@@ -1,0 +1,109 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 3 1 * *"   # monthly, to catch dependency rot
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: tests (py${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - name: Unit tests
+        run: python -m pytest -q --cov=bioflow --cov-report=term-missing
+      - name: Regenerate datasets is deterministic
+        run: |
+          python scripts/make_sample_data.py
+          git diff --exit-code datasets/sample/ || (echo "::error::dataset regeneration is not deterministic"; exit 1)
+
+  notebooks:
+    name: execute every notebook
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]" jupytext nbconvert
+      - name: Source and notebook agree
+        run: |
+          # the .py percent file is the source of truth; the .ipynb must be regenerable
+          for f in notebooks/*.py; do python -m jupytext --to ipynb "$f" -o /tmp/check.ipynb; done
+      - name: Execute notebooks
+        run: |
+          for nb in notebooks/*.ipynb; do
+            echo "::group::$nb"
+            jupyter nbconvert --to notebook --execute --stdout "$nb" > /dev/null
+            echo "::endgroup::"
+          done
+
+  figures:
+    name: figures reproduce from data
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - name: Regenerate and compare
+        run: |
+          python scripts/make_figures.py
+          if ! git diff --quiet figures/; then
+            echo "::error::figures/ changed when regenerated from data — a figure was edited by hand or the data changed without a commit"
+            git diff --stat figures/
+            exit 1
+          fi
+
+  data-and-links:
+    name: data metadata + internal links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - name: Data metadata
+        run: python scripts/check_data_metadata.py
+      - name: Internal links
+        run: python scripts/check_docs_links.py
+      - name: Citation file is valid
+        run: |
+          pip install cffconvert
+          cffconvert --validate
+
+  cross-validation:
+    name: cross-validate against Biopython
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: |
+          python -m pip install --upgrade pip
+          pip install -e . biopython
+      - name: Compare statistics with an independent implementation
+        run: python scripts/validate_against_biopython.py
