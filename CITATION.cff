@@ -1,5 +1,9 @@
 cff-version: 1.2.0
-message: "If you use this educational resource or its software, please cite the specific release you used."
+message: >-
+  If you use this educational resource or its software, please cite the specific
+  release you used. Content (prose, figures, assessments) is licensed CC BY 4.0;
+  code is MIT (see LICENSES/README.md). No DOI is registered yet; a Zenodo DOI
+  will be added at the first public release.
 title: "Linux, Git and Reproducible Workflows for Bioinformatics"
 abstract: >-
   A beginner-level, CI-tested open course on the POSIX command line, version
@@ -24,7 +28,3 @@ keywords:
   - command line
   - FASTQ
 type: software
-notes: >-
-  Content (prose, figures, assessments) is licensed CC BY 4.0; code is MIT.
-  See LICENSES/README.md. No DOI is registered yet; a Zenodo DOI will be added
-  at the first public release.
