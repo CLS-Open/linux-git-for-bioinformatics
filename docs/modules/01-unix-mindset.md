@@ -1,7 +1,7 @@
 # Module 1 — The Unix mindset: files, pipes and biological text
 
 > **Level:** beginner · **Time:** 3–4 hours · **Dataset:** `datasets/sample/reads.fastq` (200 simulated reads), `datasets/sample/proteins.fasta`, `datasets/sample/contigs.fasta`
-> **Executable companion:** [`notebooks/01_unix_mindset.ipynb`](../../notebooks/01_unix_mindset.ipynb) — every number below is reproduced there by CI.
+> **Executable companion:** [`notebooks/01_unix_mindset.ipynb`](https://github.com/CLS-Open/linux-git-for-bioinformatics/blob/main/notebooks/01_unix_mindset.ipynb) — every number below is reproduced there by CI.
 
 ## 1. Scientific background
 
@@ -186,7 +186,7 @@ and `results/contig_lengths.txt`:
 
 ## 10. Exercises
 
-See [`docs/practicals/practical-01-counting-and-composition.md`](../practicals/practical-01-counting-and-composition.md) and [`practical-02-pipes-and-streams.md`](../practicals/practical-02-pipes-and-streams.md) for the guided versions; independent work is in [`docs/assessments/`](../assessments/).
+See [`docs/practicals/practical-01-counting-and-composition.md`](../practicals/practical-01-counting-and-composition.md) and [`practical-02-pipes-and-streams.md`](../practicals/practical-02-pipes-and-streams.md) for the guided versions; independent work is in [`docs/assessments/`](https://github.com/CLS-Open/linux-git-for-bioinformatics/blob/main/docs/assessments/).
 
 Quick self-check (answers in the notebook, not here):
 1. Why is `sort | uniq -c` preferred to a Python `Counter` for a 40 GB file?

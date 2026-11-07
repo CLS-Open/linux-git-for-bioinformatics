@@ -28,9 +28,9 @@ A beginner course that treats the command line, version control and workflow fil
 - **Lessons** — [Module 1: The Unix mindset](modules/01-unix-mindset.md)
 - **Practicals** — [01 counting and composition](practicals/practical-01-counting-and-composition.md) · [02 pipes and streams](practicals/practical-02-pipes-and-streams.md)
 - **Assessments** — [Assignment](assessments/assignment-01-shell-audit.md) · [Challenge](assessments/challenge-01-streaming-qc.md) · [Quiz + key](assessments/quiz-01-module1.md)
-- **Projects** — [mini-project](../projects/mini_projects/README.md) · [capstone](../projects/capstone/README.md)
+- **Projects** — [mini-project](https://github.com/CLS-Open/linux-git-for-bioinformatics/blob/main/projects/mini_projects/README.md) · [capstone](https://github.com/CLS-Open/linux-git-for-bioinformatics/blob/main/projects/capstone/README.md)
 - **Software** — `src/bioflow/` · [validation](validation.md) · [limitations](limitations.md)
-- **Data** — [datasets README](../datasets/README.md)
+- **Data** — [datasets README](https://github.com/CLS-Open/linux-git-for-bioinformatics/blob/main/datasets/README.md)
 
 ## Licence and citation
 
